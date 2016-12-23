@@ -7,10 +7,12 @@ const jsonpURL = 'http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-2.json';
 const HttpStatusCode = {
     OK: 200
 };
+const contentDiv = $('.content');
+const lastMethod = $('.lastMethod');
 
 $('.control').on('click', function(event) {
     let button = event.target;
-    if (button.className !== 'button') return;
+    if (button.tagName !== 'BUTTON') return;
     switch (button.id) {
         case 'nativeXhr' :
             useNativeXhr();
@@ -34,12 +36,10 @@ $('.control').on('click', function(event) {
             usePost();
             break;
         case 'clean' :
-           $('.content').empty();
+           contentDiv.empty();
            break;
-        default:
-            break;
     }
-    $('.lastMethod').text(button.textContent);
+    lastMethod.text(button.textContent);
 });
 
 //--------------------------------------
@@ -163,7 +163,10 @@ function jsonCallback(data) {
     printData(data);
 }
 
-function printError(error  = 'unknown error', domParent = document.querySelector('.content')) {
+function printError(
+    error  = 'unknown error',
+    domParent = contentDiv.empty()
+) {
     if (typeof(error) !== 'string') error = error.toString();
 
     let objectDiv = document.createElement('div');
@@ -177,10 +180,13 @@ function printError(error  = 'unknown error', domParent = document.querySelector
     domParent.appendChild(objectDiv);
 }
 
-function printData(data, domParent = $(document.querySelector('.content')).empty()) {
-    if (typeof(data) !== 'object') return;
+function printData(
+    data,
+    domParent = contentDiv.empty()
+) {
+    if (typeof data !== 'object') return;
 
-    if (!domParent.tagName) domParent = $(document.querySelector('.content')).empty();
+    if (!domParent.tagName) domParent = contentDiv.empty();
 
     let objectDiv = document.createElement('div');
     objectDiv.className = 'data';
