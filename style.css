@@ -25,7 +25,7 @@ body {
     min-width: 400px;
 }
 
-.control .control__button {
+.control > button {
     display: block;
     margin: 20px auto;
     width: 150px;
@@ -36,7 +36,7 @@ body {
     border: none;
 }
 
-.control .control__button:hover {
+.control > button:hover {
     background: #43353D;
 }
 

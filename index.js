@@ -12,7 +12,7 @@ const lastMethod = $('.lastMethod');
 
 $('.control').on('click', function(event) {
     let button = event.target;
-    if (button.tagName !== 'BUTTON') return;
+    if (button.tagName.toLowerCase() !== 'button') return;
     switch (button.id) {
         case 'nativeXhr' :
             useNativeXhr();
@@ -148,10 +148,10 @@ function usePost() {
         }
     ];
 
-    data = data.map((item) => JSON.stringify(item));
+    data = JSON.stringify(data);
     $.post(postsURL, {data: data }, 'json')
         .done(function (response) {
-            printData(response['data[]'].map((user) => JSON.parse(user)));
+            printData(JSON.parse(response.data));
         })
         .fail(function(responseInfo) {
             printError(responseInfo.status);
@@ -167,7 +167,7 @@ function printError(
     error  = 'unknown error',
     domParent = contentDiv.empty()
 ) {
-    if (typeof(error) !== 'string') error = error.toString();
+    if (typeof error !== 'string') error = error.toString();
 
     let objectDiv = document.createElement('div');
     objectDiv.className = 'data';
